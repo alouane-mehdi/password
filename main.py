@@ -1,34 +1,26 @@
+import re
 
-def check_password_strength(password):
-    # Vérifie si le mot de passe respecte les exigences de sécurité
-    if len(password) < 8:
+def verifier_mot_de_passe(mot_de_passe):
+    if len(mot_de_passe) < 8:
         return False
-    if not any(char.isupper() for char in password):
+    elif not re.search("[a-z]", mot_de_passe):
         return False
-    if not any(char.islower() for char in password):
+    elif not re.search("[A-Z]", mot_de_passe):
         return False
-    if not any(char.isdigit() for char in password):
+    elif not re.search("[0-9]", mot_de_passe):
         return False
-    if not any(char in "!@#$%^&*" for char in password):
+    elif not re.search("[!,@,#,$,%,^,&,*,?]", mot_de_passe):
         return False
-    return True
+    else:
+        return True
 
-def main():
+def demander_mot_de_passe():
     while True:
-        # Demande à l'utilisateur de choisir un mot de passe
-        password = input("Choisissez un mot de passe : ")
-
-        # Vérifie si le mot de passe respecte les exigences de sécurité
-        if check_password_strength(password):
-            print("Mot de passe valide. Merci!")
+        mot_de_passe = input("Veuillez choisir un mot de passe : ")
+        if verifier_mot_de_passe(mot_de_passe):
+            print("Votre mot de passe est valide.")
             break
         else:
-            print("Le mot de passe ne respecte pas les exigences de sécurité.")
-            print("Assurez-vous qu'il contient au moins 8 caractères, une majuscule, une minuscule, un chiffre, et un caractère spécial.")
+            print("Votre mot de passe n'est pas valide. Veuillez réessayer.")
 
-if __name__ == "__main__":
-    main()
-
-    
-   
-            
+demander_mot_de_passe()
